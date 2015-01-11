@@ -1254,6 +1254,7 @@ func (rb RasterBand) Histogram(
 	} else {
 		return histogram, nil
 	}
+	return nil, nil
 }
 
 // Fetch default raster histogram
