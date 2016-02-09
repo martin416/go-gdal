@@ -124,7 +124,75 @@ func IdentifyDriver(filename string, filenameList []string) Driver {
 	return Driver{driver}
 }
 
-// Open an existing dataset
+// Open opens a raster or vector file as a GDALDataset.
+//
+// This function will try to open the passed file, or virtual dataset name by
+// invoking the Open method of each registered GDALDriver in turn. The first
+// successful open will result in a returned dataset. If all drivers fail then
+// NULL is returned and an error is issued.
+//
+// Several recommendations:
+//
+// If you open a dataset object with GDAL_OF_UPDATE access, it is not
+// recommended to open a new dataset on the same underlying file.  The
+// returned dataset should only be accessed by one thread at a time. If you
+// want to use it from different threads, you must add all necessary code
+// (mutexes, etc.) to avoid concurrent use of the object. (Some drivers, such
+// as GeoTIFF, maintain internal state variables that are updated each time a
+// new block is read, thus preventing concurrent use.)
+//
+// For drivers supporting the VSI virtual file API, it is possible to open a file
+// in a .zip archive (see VSIInstallZipFileHandler()), in a .tar/.tar.gz/.tgz
+// archive (see VSIInstallTarFileHandler()) or on a HTTP / FTP server (see
+// VSIInstallCurlFileHandler())
+//
+// In some situations (dealing with unverified data), the datasets can be opened
+// in another process through the GDAL API Proxy mechanism.
+//
+// In order to reduce the need for searches through the operating system file
+// system machinery, it is possible to give an optional list of files with the
+// papszSiblingFiles parameter. This is the list of all files at the same level
+// in the file system as the target file, including the target file. The
+// filenames must not include any path components, are an essentially just the
+// output of CPLReadDir() on the parent directory. If the target object does
+// not have filesystem semantics then the file list should be NULL.
+func OpenEx(filename string, flags uint, drivers, options, siblings []string) (Dataset, error) {
+	cFilename := C.CString(filename)
+	defer C.free(unsafe.Pointer(cFilename))
+	length := len(drivers)
+	drvs := make([]*C.char, length+1)
+	for i := 0; i < length; i++ {
+		drvs[i] = C.CString(options[i])
+		defer C.free(unsafe.Pointer(drvs[i]))
+	}
+	drvs[length] = (*C.char)(unsafe.Pointer(nil))
+
+	opts := make([]*C.char, length+1)
+	for i := 0; i < length; i++ {
+		opts[i] = C.CString(options[i])
+		defer C.free(unsafe.Pointer(opts[i]))
+	}
+	opts[length] = (*C.char)(unsafe.Pointer(nil))
+
+	sibs := make([]*C.char, length+1)
+	for i := 0; i < length; i++ {
+		sibs[i] = C.CString(options[i])
+		defer C.free(unsafe.Pointer(sibs[i]))
+	}
+	sibs[length] = (*C.char)(unsafe.Pointer(nil))
+
+	dataset := C.GDALOpenEx(
+		cFilename,
+		C.uint(flags),
+		(**C.char)(unsafe.Pointer(&drvs[0])),
+		(**C.char)(unsafe.Pointer(&opts[0])),
+		(**C.char)(unsafe.Pointer(&sibs[0])))
+	if dataset == nil {
+		return Dataset{nil}, fmt.Errorf("Error: dataset '%s' open error", filename)
+	}
+	return Dataset{dataset}, nil
+}
+
 func Open(filename string, access Access) (Dataset, error) {
 	cFilename := C.CString(filename)
 	defer C.free(unsafe.Pointer(cFilename))
