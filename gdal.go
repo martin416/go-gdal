@@ -17,8 +17,6 @@ import (
 	"unsafe"
 )
 
-var _ = fmt.Println
-
 func init() {
 	C.GDALAllRegister()
 }
