@@ -72,6 +72,7 @@ const (
 func (paletteInterp PaletteInterp) Name() string {
 	return C.GoString(C.GDALGetPaletteInterpretationName(C.GDALPaletteInterp(paletteInterp)))
 }
+
 // Construct a new color table
 func CreateColorTable(interp PaletteInterp) ColorTable {
 	ct := C.GDALCreateColorTable(C.GDALPaletteInterp(interp))

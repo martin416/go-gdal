@@ -231,5 +231,3 @@ func (driver Driver) LongName() string {
 	cDriver := driver.cval
 	return C.GoString(C.GDALGetDriverLongName(cDriver))
 }
-
-

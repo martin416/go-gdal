@@ -174,6 +174,3 @@ func (rat RasterAttributeTable) RowOfValue(val float64) (int, bool) {
 	row := C.GDALRATGetRowOfValue(rat.cval, C.double(val))
 	return int(row), row != -1
 }
-
-
-

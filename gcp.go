@@ -16,4 +16,3 @@ import "C"
 // Unimplemented: DuplicateGCPs
 // Unimplemented: GCPsToGeoTransform
 // Unimplemented: ApplyGeoTransform
-

@@ -65,4 +65,3 @@ func goGDALProgressFuncProxyA(complete C.double, message *C.char, data unsafe.Po
 		float64(complete), C.GoString(message), arg.data,
 	)
 }
-

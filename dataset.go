@@ -1,4 +1,3 @@
-
 package gdal
 
 /*
@@ -346,5 +345,3 @@ func (sourceDataset Dataset) CopyWholeRaster(
 		unsafe.Pointer(arg),
 	).Err()
 }
-
-

@@ -478,5 +478,3 @@ func (sourceRaster RasterBand) RasterBandCopyWholeRaster(
 
 // Generate downsampled overviews
 // Unimplemented: RegenerateOverviews
-
-
