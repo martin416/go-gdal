@@ -11,7 +11,7 @@ package gdal
 */
 import "C"
 import (
-	//"unsafe"
+//"unsafe"
 )
 
 type StyleMgr struct {

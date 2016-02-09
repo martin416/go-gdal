@@ -144,7 +144,6 @@ func (env Envelope) Contains(other Envelope) bool {
 		env.cval.MaxY >= other.cval.MaxY
 }
 
-
 // Convert a go bool to a C int
 func BoolToCInt(in bool) (out C.int) {
 	if in {
@@ -692,5 +691,3 @@ func (geom Geometry) BuildPolygonFromEdges(autoClose bool, tolerance float64) (G
 	)
 	return Geometry{newGeom}, cErr.Err()
 }
-
-

@@ -222,5 +222,3 @@ func (layer Layer) SetIgnoredFields(names []string) error {
 // Remove areas that are covered by the provided layer
 // Unimplemented: Erase
 // Will be new in 2.0
-
-

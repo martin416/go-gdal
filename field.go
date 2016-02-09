@@ -14,7 +14,6 @@ import (
 	"unsafe"
 )
 
-
 type FieldType int
 
 const (
@@ -152,5 +151,3 @@ func (ft FieldType) Name() string {
 	name := C.OGR_GetFieldTypeName(C.OGRFieldType(ft))
 	return C.GoString(name)
 }
-
-

@@ -22,6 +22,7 @@ func init() {
 func CleanupOGR() {
 	C.OGRCleanupAll()
 }
+
 /* -------------------------------------------------------------------- */
 /*      Data source functions                                           */
 /* -------------------------------------------------------------------- */
@@ -288,4 +289,3 @@ func OGRDriverByName(name string) OGRDriver {
 	driver := C.OGRGetDriverByName(cName)
 	return OGRDriver{driver}
 }
-
