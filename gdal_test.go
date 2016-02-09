@@ -12,3 +12,12 @@ func TestTiffDriver(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 }
+
+func TestConfigOption(t *testing.T) {
+	k, v := "GDAL_GO_TEST", "ON"
+	SetConfigOption(k, v)
+	value := GetConfigOption(k, "")
+	if value != v {
+		t.Errorf("Invalid value: %s\n", value)
+	}
+}
