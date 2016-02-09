@@ -367,7 +367,7 @@ func (rb RasterBand) Histogram(
 	).Err(); err != nil {
 		return nil, err
 	} else {
-		return CIntSliceToInt(histogram), nil
+		return cIntSliceToInt(histogram), nil
 	}
 	return nil, err
 }

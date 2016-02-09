@@ -170,7 +170,7 @@ func (dataset Dataset) IO(
 		C.int(bufXSize), C.int(bufYSize),
 		C.GDALDataType(dataType),
 		C.int(bandCount),
-		(*C.int)(unsafe.Pointer(&IntSliceToCInt(bandMap)[0])),
+		(*C.int)(unsafe.Pointer(&intSliceToCInt(bandMap)[0])),
 		C.int(pixelSpace), C.int(lineSpace), C.int(bandSpace),
 	).Err()
 }
@@ -198,7 +198,7 @@ func (dataset Dataset) AdviseRead(
 		C.int(bufXSize), C.int(bufYSize),
 		C.GDALDataType(dataType),
 		C.int(bandCount),
-		(*C.int)(unsafe.Pointer(&IntSliceToCInt(bandMap)[0])),
+		(*C.int)(unsafe.Pointer(&intSliceToCInt(bandMap)[0])),
 		(**C.char)(unsafe.Pointer(&cOptions[0])),
 	).Err()
 }
@@ -294,9 +294,9 @@ func (dataset Dataset) BuildOverviews(
 		dataset.cval,
 		cResampling,
 		C.int(nOverviews),
-		(*C.int)(unsafe.Pointer(&IntSliceToCInt(overviewList)[0])),
+		(*C.int)(unsafe.Pointer(&intSliceToCInt(overviewList)[0])),
 		C.int(nBands),
-		(*C.int)(unsafe.Pointer(&IntSliceToCInt(bandList)[0])),
+		(*C.int)(unsafe.Pointer(&intSliceToCInt(bandList)[0])),
 		C.goGDALProgressFuncProxyB(),
 		unsafe.Pointer(arg),
 	).Err()
