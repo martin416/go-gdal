@@ -1293,8 +1293,8 @@ func (rb RasterBand) Histogram(
 	}
 
 	histogram := make([]int, buckets)
-
-	if err := C.GDALGetRasterHistogram(
+	var err error
+	if err = C.GDALGetRasterHistogram(
 		rb.cval,
 		C.double(min),
 		C.double(max),
