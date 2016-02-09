@@ -13,6 +13,11 @@ func TestTiffDriver(t *testing.T) {
 	}
 }
 
+func TestShapeDriver(t *testing.T) {
+	drv := OGRDriverByName("ESRI Shapefile")
+	drv.TestCapability("NA")
+}
+
 func TestHistogram(t *testing.T) {
 	drv, err := GetDriverByName("MEM")
 	if err != nil {
