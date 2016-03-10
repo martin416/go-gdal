@@ -1313,7 +1313,7 @@ func (rb RasterBand) Histogram(
 
 	histogram := make([]C.GUIntBig, buckets)
 	var err error
-	if err = C.GDALGetRasterHistogramEx(
+	if err = C.GDALGetRasterHistogram(
 		rb.cval,
 		C.double(min),
 		C.double(max),
@@ -1343,7 +1343,7 @@ func (rb RasterBand) DefaultHistogram(
 
 	var cHistogram *C.GUIntBig
 
-	err = C.GDALGetDefaultHistogramEx(
+	err = C.GDALGetDefaultHistogram(
 		rb.cval,
 		(*C.double)(&min),
 		(*C.double)(&max),
