@@ -125,7 +125,7 @@ func IntSliceToCInt(data []int) []C.int {
 }
 
 //Safe array conversion
-func CIntSliceToInt(data []C.long) []uint64 {
+func CIntSliceToInt(data []C.int) []uint64 {
 	sliceSz := len(data)
 	result := make([]uint64, sliceSz)
 	for i := 0; i < sliceSz; i++ {
