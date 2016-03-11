@@ -125,7 +125,7 @@ func IntSliceToCInt(data []int) []C.int {
 }
 
 //Safe array conversion
-func CIntSliceToInt(data []C.GUIntBig) []uint64 {
+func CIntSliceToInt(data []C.long) []uint64 {
 	sliceSz := len(data)
 	result := make([]uint64, sliceSz)
 	for i := 0; i < sliceSz; i++ {
@@ -1311,14 +1311,14 @@ func (rb RasterBand) Histogram(
 		progress, data,
 	}
 
-	histogram := make([]C.GUIntBig, buckets)
+	histogram := make([]C.long, buckets)
 	var err error
 	if err = C.GDALGetRasterHistogram(
 		rb.cval,
 		C.double(min),
 		C.double(max),
 		C.int(buckets),
-		(*C.GUIntBig)(unsafe.Pointer(&histogram[0])),
+		(*C.long)(unsafe.Pointer(&histogram[0])),
 		C.int(includeOutOfRange),
 		C.int(approxOK),
 		C.goGDALProgressFuncProxyB(),
@@ -1341,7 +1341,7 @@ func (rb RasterBand) DefaultHistogram(
 		progress, data,
 	}
 
-	var cHistogram *C.GUIntBig
+	var cHistogram *C.long
 
 	err = C.GDALGetDefaultHistogram(
 		rb.cval,
