@@ -846,10 +846,10 @@ func (dataset Dataset) SetProjection(proj string) error {
 }
 
 // Get the affine transformation coefficients
-func (dataset Dataset) GeoTransform() [6]float64 {
+func (dataset Dataset) GeoTransform() ([6]float64, error) {
 	var transform [6]float64
-	C.GDALGetGeoTransform(dataset.cval, (*C.double)(unsafe.Pointer(&transform[0])))
-	return transform
+	err := C.GDALGetGeoTransform(dataset.cval, (*C.double)(unsafe.Pointer(&transform[0]))).Err()
+	return transform, err
 }
 
 // Set the affine transformation coefficients
@@ -861,8 +861,14 @@ func (dataset Dataset) SetGeoTransform(transform [6]float64) error {
 }
 
 // Return the inverted transform
-func (dataset Dataset) InvGeoTransform() [6]float64 {
-	return InvGeoTransform(dataset.GeoTransform())
+func (dataset Dataset) InvGeoTransform() ([6]float64, error) {
+	geo, err := dataset.GeoTransform()
+	if err != nil {
+		return geo, err
+	}
+
+	geo = InvGeoTransform(geo)
+	return InvGeoTransform(geo), nil
 }
 
 // Invert the supplied transform
