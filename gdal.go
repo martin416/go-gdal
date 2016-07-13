@@ -1485,6 +1485,11 @@ func (ct ColorTable) Entry(index int) ColorEntry {
 	return ColorEntry{entry}
 }
 
+func (ct ColorTable) GetColorEntryAsRGB(index int, entry ColorEntry) int {
+	color := C.GDALGetColorEntryAsRGB(ct.cval, C.int(index), entry.cval)
+	return int(color)
+}
+
 // Unimplemented: EntryAsRGB
 
 // Set entry in color table
