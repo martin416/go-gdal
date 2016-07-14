@@ -759,32 +759,24 @@ func (dataset Dataset) IO(
 	bandMap []int,
 	pixelSpace, lineSpace, bandSpace int,
 ) error {
-	var dataType DataType
+	var dataType DataType = dataset.RasterBand(1).RasterDataType()
 	var dataPtr unsafe.Pointer
 	switch data := buffer.(type) {
 	case []int8:
-		dataType = Byte
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint8:
-		dataType = Byte
 		dataPtr = unsafe.Pointer(&data[0])
 	case []int16:
-		dataType = Int16
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint16:
-		dataType = UInt16
 		dataPtr = unsafe.Pointer(&data[0])
 	case []int32:
-		dataType = Int32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint32:
-		dataType = UInt32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []float32:
-		dataType = Float32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []float64:
-		dataType = Float64
 		dataPtr = unsafe.Pointer(&data[0])
 	default:
 		return fmt.Errorf("Error: buffer is not a valid data type (must be a valid numeric slice)")
@@ -1028,32 +1020,24 @@ func (rasterBand RasterBand) IO(
 	bufXSize, bufYSize int,
 	pixelSpace, lineSpace int,
 ) error {
-	var dataType DataType
+	var dataType DataType = rasterBand.RasterDataType()
 	var dataPtr unsafe.Pointer
 	switch data := buffer.(type) {
 	case []int8:
-		dataType = Byte
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint8:
-		dataType = Byte
 		dataPtr = unsafe.Pointer(&data[0])
 	case []int16:
-		dataType = Int16
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint16:
-		dataType = UInt16
 		dataPtr = unsafe.Pointer(&data[0])
 	case []int32:
-		dataType = Int32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []uint32:
-		dataType = UInt32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []float32:
-		dataType = Float32
 		dataPtr = unsafe.Pointer(&data[0])
 	case []float64:
-		dataType = Float64
 		dataPtr = unsafe.Pointer(&data[0])
 	default:
 		return fmt.Errorf("Error: buffer is not a valid data type (must be a valid numeric slice)")
